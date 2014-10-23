@@ -7,26 +7,8 @@ class Rover
 		@direction = direction
 	end
 
-	def diplay_position
+	def display_position
 		puts "#{@x}, #{@y}, #{@direction}"
-	end
-
-	def read_instruction 
-	puts "Input instructions (M, L, R):"
-	@instructions = get.chomp
-	end
-
-	def interpret_instructions
-		@instructions.each_char do |c|
-			case c
-			when "M"
-				move
-			when"L"
-				turn_left
-			when"R"
-				turn_right
-			end
-		end
 	end
 
 	def move
@@ -67,7 +49,9 @@ class Rover
 end
 
 rover1 = Rover.new(0,0,"N")
-
+rover1.display_position
+rover1.turn_left
+rover1.display_position
 
 
 
