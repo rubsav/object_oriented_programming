@@ -15,7 +15,7 @@ class Rover
 		if (@direction == "N") 
 			@y += 1
 		elsif (@direction == "S")
-			@x -= 1
+			@y -= 1
 		elsif (@direction == "W")
 			@x -= 1
 		else (@direction == "E")
@@ -46,15 +46,49 @@ class Rover
 			@direction = "N"
 		end
 	end
+
+
+	def interpret_instructions
+		@instructions.each_char do |c|
+			case c
+			when "M"
+				move
+			when"L"
+				turn_left
+			when"R"
+				turn_right
+			end
+		end
+	end
+
+	def read_instructions (instructions)
+		@instructions = instructions
+		interpret_instructions
+	
+	end
 end
 
-rover1 = Rover.new(0,0,"N")
+puts "where is rover1 (x, y, direction)?"
+rover_position = gets.chomp.upcase
+
+rover1 = Rover.new(rover_position.split[0].to_i,rover_position.split[1].to_i,rover_position.split[2])#turns input into an array
 rover1.display_position
-rover1.turn_left
+
+puts "Input instructions (M, L, R):"
+	instructions = gets.chomp.upcase
+rover1.read_instructions(instructions)
 rover1.display_position
 
+puts "where is rover2 (x, y, direction)?"
+rover_position = gets.chomp.upcase
 
+rover2 = Rover.new(rover_position.split[0].to_i,rover_position.split[1].to_i,rover_position.split[2])
+rover2.display_position
 
+puts "Input instructions (M, L, R):"
+	instructions = gets.chomp.upcase
+rover2.read_instructions(instructions)
+rover2.display_position
 
 
 
