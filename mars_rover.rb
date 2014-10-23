@@ -1,7 +1,7 @@
 class Rover
 	attr_accessor :x, :y, :direction
 
-	def initilaize (x, y, direction)
+	def initialize (x, y, direction)
 		@x = x
 		@y = y
 		@direction = direction
@@ -14,6 +14,19 @@ class Rover
 	def read_instruction 
 	puts "Input instructions (M, L, R):"
 	@instructions = get.chomp
+	end
+
+	def interpret_instructions
+		@instructions.each_char do |c|
+			case c
+			when "M"
+				move
+			when"L"
+				turn_left
+			when"R"
+				turn_right
+			end
+		end
 	end
 
 	def move
@@ -53,7 +66,7 @@ class Rover
 	end
 end
 
-	
+rover1 = Rover.new(0,0,"N")
 
 
 
