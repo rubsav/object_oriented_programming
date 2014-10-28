@@ -1,5 +1,14 @@
+module PlateauSize
+	def set_plateau(height, width)
+		@height = height
+		@width = width
+	end
+end
+
 class Rover
 	attr_accessor :x, :y, :direction
+
+	include PlateauSize
 
 	def initialize (x, y, direction)
 		@x = x
@@ -21,6 +30,11 @@ class Rover
 		else (@direction == "E")
 			@x += 1
 		end
+
+		@x = [@x, @width].min
+		@y = [@y, @height].min
+		@x = [@x, 0].max
+		@y = [@y, 0].max
 	end
 
 	def turn_left
@@ -47,6 +61,10 @@ class Rover
 		end
 	end
 
+	def read_instructions (instructions)
+		@instructions = instructions
+		interpret_instructions
+	end
 
 	def interpret_instructions
 		@instructions.each_char do |c|
@@ -60,18 +78,16 @@ class Rover
 			end
 		end
 	end
-
-	def read_instructions (instructions)
-		@instructions = instructions
-		interpret_instructions
-	
-	end
 end
+
+puts "Please enter the plateau size (height/width): "
+plateau = gets.chomp
 
 puts "where is rover1 (x, y, direction)?"
 rover_position = gets.chomp.upcase
 
 rover1 = Rover.new(rover_position.split[0].to_i,rover_position.split[1].to_i,rover_position.split[2])#turns input into an array
+rover1.set_plateau(plateau.split[0].to_i, plateau.split[1].to_i)
 rover1.display_position
 
 puts "Input instructions (M, L, R):"
@@ -83,6 +99,7 @@ puts "where is rover2 (x, y, direction)?"
 rover_position = gets.chomp.upcase
 
 rover2 = Rover.new(rover_position.split[0].to_i,rover_position.split[1].to_i,rover_position.split[2])
+rover2.set_plateau(plateau.split[0].to_i, plateau.split[1].to_i)
 rover2.display_position
 
 puts "Input instructions (M, L, R):"
